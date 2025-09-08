@@ -1,25 +1,23 @@
-import Main from "./Main";
-import { useEffect, useState } from "react";
+import { useEffect, useRef } from "react";
 import Navbar from "./Navbar";
-
-export type User = {
-  id: number;
-  name: string;
-  username: string;
-  email: string;
-};
-export type Post = {
-  userId: number;
-  id: number;
-  title: string;
-};
-
-export type ButtonStatus = "users" | "posts" | "both";
+import Main from "./Main";
+import DeleteUserModal from "./Modal/DeleteUserModal";
+import useDataStore from "../store/dataStore";
+import type { Post, User } from "../store/types";
+import DeletePostModal from "./Modal/DeletePostModal";
+import EditPostModal from "./Modal/EditPostModal";
+import EditUserModal from "./Modal/EditUserModal";
+import AddUserModal from "./Modal/AddUserModal";
+import AddPostModal from "./Modal/AddPostModal";
 
 const Homepage = () => {
-  const [users, setUsers] = useState<User[]>([]);
-  const [posts, setPosts] = useState<Post[]>([]);
-  const [activeLink, setActiveLink] = useState<ButtonStatus>("both");
+  const { setUsers, setPosts } = useDataStore();
+  const deleteUserRef = useRef<HTMLDialogElement | null>(null);
+  const deletePostRef = useRef<HTMLDialogElement | null>(null);
+  const editPostRef = useRef<HTMLDialogElement | null>(null);
+  const editUserRef = useRef<HTMLDialogElement | null>(null);
+  const addUserRef = useRef<HTMLDialogElement | null>(null);
+  const addPostRef = useRef<HTMLDialogElement | null>(null);
 
   useEffect(() => {
     getUsers();
@@ -56,8 +54,21 @@ const Homepage = () => {
 
   return (
     <div className="h-full">
-      <Navbar active={activeLink} handleActiveLink={setActiveLink} getUsers={getUsers} getPosts={getPosts} />
-      <Main users={users} posts={posts} activeLink={activeLink} />
+      <Navbar getUsers={getUsers} getPosts={getPosts} />
+      <Main
+        deleteUserRef={deleteUserRef}
+        deletePostRef={deletePostRef}
+        editPostRef={editPostRef}
+        editUserRef={editUserRef}
+        addUserRef={addUserRef}
+        addPostRef={addPostRef}
+      />
+      <DeleteUserModal deleteUserRef={deleteUserRef} />
+      <DeletePostModal deletePostRef={deletePostRef} />
+      <EditPostModal editPostRef={editPostRef} />
+      <EditUserModal editUserRef={editUserRef} />
+      <AddUserModal addUserRef={addUserRef} />
+      <AddPostModal addPostRef={addPostRef} />
     </div>
   );
 };
