@@ -1,15 +1,14 @@
 import NavButton from "./UI/NavButton";
 
-const Navbar = ({ getUsers, getPosts }: { getUsers: () => Promise<void>; getPosts: () => Promise<void> }) => {
-  const getBoth = async () => {
-    await getUsers();
-    await getPosts();
-  };
+const Navbar = ({ getData }: { getData: () => Promise<void> }) => {
   return (
     <nav className="flex items-center justify-center gap-8 p-6">
-      <NavButton linkFor='users' getData={getUsers}>Show Users</NavButton>
-      <NavButton linkFor='posts' getData={getPosts}>Show Posts</NavButton>
-      <NavButton linkFor='both' getData={getBoth}>Show Both</NavButton>
+      <NavButton linkFor="users">Show Users</NavButton>
+      <NavButton linkFor="posts">Show Posts</NavButton>
+      <NavButton linkFor="both">Show Both</NavButton>
+      <button className="bg-blue-800 text-white px-4 py-2 rounded cursor-pointer" onClick={getData}>
+        Refresh
+      </button>
     </nav>
   );
 };

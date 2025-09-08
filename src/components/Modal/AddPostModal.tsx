@@ -1,9 +1,11 @@
-import { useEffect, useState, type RefObject } from "react";
+import { useEffect, useState } from "react";
 import useDataStore from "../../store/dataStore";
 import useInteractionStore from "../../store/interactionStore";
 import type { Post } from "../../store/types";
+import { useRefContext } from "../RefContext";
 
-const AddPostModal = ({ addPostRef }: { addPostRef: RefObject<HTMLDialogElement | null> }) => {
+export const AddPostModal = () => {
+  const { addPostRef } = useRefContext();
   const { users, posts, setPosts } = useDataStore();
   const { activeId, setActiveId } = useInteractionStore();
   const [newPost, setNewPost] = useState<Post>({ id: 0, title: "", userId: 0 });
@@ -60,9 +62,7 @@ const AddPostModal = ({ addPostRef }: { addPostRef: RefObject<HTMLDialogElement 
             </option>
           ))}
         </select>
-        <button type="submit">
-          Save
-        </button>
+        <button type="submit">Save</button>
         <button type="button" onClick={() => addPostRef.current?.close()}>
           Close
         </button>
@@ -70,5 +70,3 @@ const AddPostModal = ({ addPostRef }: { addPostRef: RefObject<HTMLDialogElement 
     </dialog>
   );
 };
-
-export default AddPostModal;

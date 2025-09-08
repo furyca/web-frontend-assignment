@@ -1,19 +1,22 @@
-import { useEffect, useState, type RefObject } from "react";
+import { useEffect, useState } from "react";
 import useInteractionStore from "../../store/interactionStore";
 import useDataStore from "../../store/dataStore";
+import { useRefContext } from "../RefContext";
 
-const DeleteUserModal = ({ deleteUserRef }: { deleteUserRef: RefObject<HTMLDialogElement | null> }) => {
-  const { users, setUsers } = useDataStore();
+export const DeleteUserModal = () => {
+  const { deleteUserRef } = useRefContext();
+  const { users, setUsers, setPosts, posts } = useDataStore();
   const { activeId, setActiveId } = useInteractionStore();
   const [username, setUsername] = useState<string | null>(null);
 
   const handleDelete = async () => {
     if (activeId) {
       setUsers(users.filter((u) => u.id !== activeId));
+      setPosts(posts.filter((p) => p.userId !== activeId));
+      alert("User deleted");
+      deleteUserRef.current?.close();
+      setActiveId(null);
     }
-    alert("User deleted");
-    deleteUserRef.current?.close();
-    setActiveId(null);
   };
 
   useEffect(() => {
@@ -51,5 +54,3 @@ const DeleteUserModal = ({ deleteUserRef }: { deleteUserRef: RefObject<HTMLDialo
     </dialog>
   );
 };
-
-export default DeleteUserModal;

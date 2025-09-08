@@ -1,3 +1,1 @@
-TO DO
-  -Code Cleanup
-  -Polish the UI
+Polishing the UI

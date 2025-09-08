@@ -1,12 +1,14 @@
-import { useEffect, useState, type RefObject } from "react";
+import { useEffect, useState } from "react";
 import useDataStore from "../../store/dataStore";
 import useInteractionStore from "../../store/interactionStore";
 import type { User } from "../../store/types";
+import { useRefContext } from "../RefContext";
 
-const AddUserModal = ({ addUserRef }: { addUserRef: RefObject<HTMLDialogElement | null> }) => {
+export const AddUserModal = () => {
+  const [newUser, setNewUser] = useState<User>({ id: 0, name: "", username: "", email: "" });
+  const { addUserRef } = useRefContext();
   const { users, setUsers } = useDataStore();
   const { activeId, setActiveId } = useInteractionStore();
-  const [newUser, setNewUser] = useState<User>({ id: 0, name: "", username: "", email: "" });
 
   const handleCreate = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -74,5 +76,3 @@ const AddUserModal = ({ addUserRef }: { addUserRef: RefObject<HTMLDialogElement 
     </dialog>
   );
 };
-
-export default AddUserModal;

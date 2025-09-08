@@ -1,11 +1,14 @@
-import { useEffect, useState, type RefObject } from "react";
+import { useEffect, useState } from "react";
 import useDataStore from "../../store/dataStore";
 import useInteractionStore from "../../store/interactionStore";
+import { useRefContext } from "../RefContext";
 
-const DeletePostModal = ({ deletePostRef }: { deletePostRef: RefObject<HTMLDialogElement | null> }) => {
+export const DeletePostModal = () => {
+  const [postname, setPostname] = useState<string | null>(null);
+  const { deletePostRef } = useRefContext();
   const { posts, setPosts } = useDataStore();
   const { activeId, setActiveId } = useInteractionStore();
-  const [postname, setPostname] = useState<string | null>(null);
+
   const handleDelete = async () => {
     if (activeId) {
       setPosts(posts.filter((p) => p.id !== activeId));
@@ -48,5 +51,3 @@ const DeletePostModal = ({ deletePostRef }: { deletePostRef: RefObject<HTMLDialo
     </dialog>
   );
 };
-
-export default DeletePostModal;

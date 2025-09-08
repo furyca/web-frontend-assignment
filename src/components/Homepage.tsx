@@ -1,27 +1,15 @@
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 import Navbar from "./Navbar";
 import Main from "./Main";
-import DeleteUserModal from "./Modal/DeleteUserModal";
 import useDataStore from "../store/dataStore";
 import type { Post, User } from "../store/types";
-import DeletePostModal from "./Modal/DeletePostModal";
-import EditPostModal from "./Modal/EditPostModal";
-import EditUserModal from "./Modal/EditUserModal";
-import AddUserModal from "./Modal/AddUserModal";
-import AddPostModal from "./Modal/AddPostModal";
+import { RefProvider } from "./RefContext";
+import { AddPostModal, AddUserModal, DeletePostModal, DeleteUserModal, EditPostModal, EditUserModal } from "./Modal";
 
 const Homepage = () => {
   const { setUsers, setPosts } = useDataStore();
-  const deleteUserRef = useRef<HTMLDialogElement | null>(null);
-  const deletePostRef = useRef<HTMLDialogElement | null>(null);
-  const editPostRef = useRef<HTMLDialogElement | null>(null);
-  const editUserRef = useRef<HTMLDialogElement | null>(null);
-  const addUserRef = useRef<HTMLDialogElement | null>(null);
-  const addPostRef = useRef<HTMLDialogElement | null>(null);
-
   useEffect(() => {
-    getUsers();
-    getPosts();
+    getData();
 
     return () => {
       setUsers([]);
@@ -51,24 +39,22 @@ const Homepage = () => {
     }));
     setPosts(filteredData);
   };
-
+  const getData = async () => {
+    await getUsers();
+    await getPosts();
+  };
   return (
     <div className="h-full">
-      <Navbar getUsers={getUsers} getPosts={getPosts} />
-      <Main
-        deleteUserRef={deleteUserRef}
-        deletePostRef={deletePostRef}
-        editPostRef={editPostRef}
-        editUserRef={editUserRef}
-        addUserRef={addUserRef}
-        addPostRef={addPostRef}
-      />
-      <DeleteUserModal deleteUserRef={deleteUserRef} />
-      <DeletePostModal deletePostRef={deletePostRef} />
-      <EditPostModal editPostRef={editPostRef} />
-      <EditUserModal editUserRef={editUserRef} />
-      <AddUserModal addUserRef={addUserRef} />
-      <AddPostModal addPostRef={addPostRef} />
+      <Navbar getData={getData} />
+      <RefProvider>
+        <Main />
+        <DeleteUserModal />
+        <DeletePostModal />
+        <EditPostModal />
+        <EditUserModal />
+        <AddUserModal />
+        <AddPostModal />
+      </RefProvider>
     </div>
   );
 };

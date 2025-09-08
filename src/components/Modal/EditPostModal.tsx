@@ -1,12 +1,14 @@
-import { useEffect, useState, type RefObject } from "react";
+import { useEffect, useState } from "react";
 import useDataStore from "../../store/dataStore";
 import useInteractionStore from "../../store/interactionStore";
+import { useRefContext } from "../RefContext";
 
-const EditPostModal = ({ editPostRef }: { editPostRef: RefObject<HTMLDialogElement | null> }) => {
+export const EditPostModal = () => {
+  const [postname, setPostname] = useState<string | null>(null);
+  const [title, setTitle] = useState<string>("");
+  const { editPostRef } = useRefContext();
   const { posts, setPosts } = useDataStore();
   const { activeId, setActiveId } = useInteractionStore();
-  const [postname, setPostname] = useState<string | null>(null);
-  const [title, setTitle] = useState<string>('');
 
   const handleEdit = async () => {
     if (activeId) {
@@ -23,7 +25,7 @@ const EditPostModal = ({ editPostRef }: { editPostRef: RefObject<HTMLDialogEleme
 
     return () => {
       setPostname(null);
-      setTitle('');
+      setTitle("");
     };
   }, [activeId]);
   return (
@@ -40,9 +42,7 @@ const EditPostModal = ({ editPostRef }: { editPostRef: RefObject<HTMLDialogEleme
       <form method="dialog" onSubmit={handleEdit}>
         <p>Edit '{postname}'</p>
         <input type="text" placeholder="Title" value={title} onChange={(e) => setTitle(e.target.value)} />
-        <button type="submit">
-          Save
-        </button>
+        <button type="submit">Save</button>
         <button type="button" onClick={() => editPostRef.current?.close()}>
           Close
         </button>
@@ -50,5 +50,3 @@ const EditPostModal = ({ editPostRef }: { editPostRef: RefObject<HTMLDialogEleme
     </dialog>
   );
 };
-
-export default EditPostModal;
