@@ -15,7 +15,7 @@ git clone https://github.com/furyca/web-frontend-assignment.git
 
 ### Step 2: Install Dependencies
 
-Got to the project direction and install the project dependencies:
+Go to the project direction and install the project dependencies:
 
 ```sh
 cd web-frontend-assignment
@@ -29,3 +29,4 @@ To start the development server, run:
 ```sh
 npm run dev
 ```
+
