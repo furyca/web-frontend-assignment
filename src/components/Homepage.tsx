@@ -44,7 +44,7 @@ const Homepage = () => {
     await getPosts();
   };
   return (
-    <div className="h-full">
+    <div className="h-full bg-stone-950 text-gray-300">
       <Navbar getData={getData} />
       <RefProvider>
         <Main />

@@ -28,7 +28,7 @@ export const DeletePostModal = () => {
   return (
     <dialog
       ref={deletePostRef}
-      className="backdrop:bg-black/50"
+      className="backdrop:bg-black/50 h-1/4 w-1/4 rounded bg-slate-300 text-black"
       style={{
         position: "fixed",
         top: "50%",
@@ -36,14 +36,20 @@ export const DeletePostModal = () => {
         transform: "translate(-50%, -50%)",
       }}
     >
-      <div className=" bg-white text-black p-4 rounded-md flex flex-col justify-between">
-        <h2>Delete Post?</h2>
-        <p>Are you sure you want to delete '{postname}'?</p>
+      <div className="p-4 rounded-md flex flex-col justify-between h-full">
+        <h2 className="font-bold text-xl text-center">Delete Post?</h2>
+        <p className="text-sm">Are you sure you want to delete '{postname}'?</p>
         <div className="flex justify-end gap-4">
-          <button className="px-4 py-2 bg-red-600 rounded-md" onClick={handleDelete}>
+          <button
+            className="cursor-pointer p-2 px-3 w-full rounded bg-red-900 hover:bg-red-950 text-gray-300 text-sm font-semibold transition-all duration-200"
+            onClick={handleDelete}
+          >
             Delete
           </button>
-          <button className="px-4 py-2 bg-gray-300 rounded-md" onClick={() => deletePostRef.current?.close()}>
+          <button
+            className="cursor-pointer p-2 px-3 w-full rounded bg-gray-700 hover:bg-gray-900 text-gray-300 text-sm font-semibold transition-all duration-200"
+            onClick={() => deletePostRef.current?.close()}
+          >
             Cancel
           </button>
         </div>

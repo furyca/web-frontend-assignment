@@ -1,12 +1,12 @@
-import { createContext, useContext, useRef, type ReactNode } from "react";
+import { createContext, useContext, useRef, type ReactNode, type RefObject } from "react";
 
 type RefContextType = {
-  deleteUserRef: React.RefObject<HTMLDialogElement | null>;
-  deletePostRef: React.RefObject<HTMLDialogElement | null>;
-  editPostRef: React.RefObject<HTMLDialogElement | null>;
-  editUserRef: React.RefObject<HTMLDialogElement | null>;
-  addUserRef: React.RefObject<HTMLDialogElement | null>;
-  addPostRef: React.RefObject<HTMLDialogElement | null>;
+  deleteUserRef: RefObject<HTMLDialogElement | null>;
+  deletePostRef: RefObject<HTMLDialogElement | null>;
+  editPostRef: RefObject<HTMLDialogElement | null>;
+  editUserRef: RefObject<HTMLDialogElement | null>;
+  addUserRef: RefObject<HTMLDialogElement | null>;
+  addPostRef: RefObject<HTMLDialogElement | null>;
 };
 
 const RefContext = createContext<RefContextType | null>(null);

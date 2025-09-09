@@ -9,10 +9,10 @@ const NavButton = ({ children, linkFor }: { children: ReactNode; linkFor: Button
       onClick={() => {
         setActiveLink(linkFor);
       }}
-      className={`px-4 py-2 cursor-pointer rounded-sm ${
+      className={`px-4 py-2 w-24 cursor-pointer rounded-sm transition-all ease-initial duration-300 ${
         linkFor === activeLink
-          ? "bg-linear-[0deg,black_2%,transparent_12%,transparent] text-base font-bold"
-          : "bg-linear-[0deg,white_2%,transparent_12%,transparent]"
+          ? "bg-linear-[0deg,white_2%,transparent_8%,transparent] text-base font-bold"
+          : "bg-linear-[0deg,teal_2%,transparent_8%,transparent]"
       } `}
     >
       {children}
